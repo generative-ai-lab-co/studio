@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Star</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        #game-container { position: relative; }
+        #score { position: absolute; top: 10px; left: 10px; font-family: Arial, sans-serif; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="score">Score: 0</div>
+        <svg width="400" height="400" viewBox="0 0 400 400">
+            <rect width="100%" height="100%" fill="#001f3f"/>
+            <circle id="catcher" cx="200" cy="380" r="20" fill="#ffdc00"/>
+            <path id="star" d="M10 10 L14 22 L2 15 L18 15 L6 22 Z" fill="#ffffff" transform="translate(0, 0) scale(2)"/>
+        </svg>
+    </div>
+
+    <script>
+        const svg = document.querySelector('svg');
+        const catcher = document.getElementById('catcher');
+        const star = document.getElementById('star');
+        const scoreElement = document.getElementById('score');
+        let score = 0;
+
+        function moveCatcher(e) {
+            const rect = svg.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            if (x >= 20 && x <= 380) {
+                catcher.setAttribute('cx', x);
+            }
+        }
+
+        function moveStar() {
+            let x = Math.random() * 360 + 20;
+            let y = -40;
+            star.setAttribute('transform', `translate(${x}, ${y}) scale(2)`);
+
+            function fall() {
+                y += 2;
+                star.setAttribute('transform', `translate(${x}, ${y}) scale(2)`);
+
+                if (y < 400) {
+                    if (y >= 340 && Math.abs(x - catcher.getAttribute('cx')) < 40) {
+                        score++;
+                        scoreElement.textContent = `Score: ${score}`;
+                        moveStar();
+                    } else {
+                        requestAnimationFrame(fall);
+                    }
+                } else {
+                    moveStar();
+                }
+            }
+
+            fall();
+        }
+
+        svg.addEventListener('mousemove', moveCatcher);
+        moveStar();
+    </script>
+</body>
+</html>
