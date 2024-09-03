@@ -1,0 +1,20 @@
+<svg width="800" height="600">
+<!-- Concepts and expressions -->
+<g id="concepts">
+<circle cx="100" cy="100" r="50" fill="#ff0000" />
+<text x="150" y="150" font-size="24" font-family="Arial">∀x ∈ 𝕌: x ⟷ ¬x</text>
+<rect x="200" y="200" width="100" height="50" fill="#00ff00" />
+<text x="250" y="250" font-size="24" font-family="Arial">∃y: y = {z: z ∉ z}</text>
+</g>
+<!-- Connections -->
+<g id="connections">
+<line x1="100" y1="100" x2="200" y2="200" stroke="#0000ff" stroke-width="2" />
+<curve x1="200" y1="200" x2="300" y2="300" stroke="#ff0000" stroke-width="2" />
+</g>
+<!-- Player -->
+<circle cx="50" cy="50" r="20" fill="#ffff00" />
+</svg>
+
+<script>
+// Get the SVG elements const concepts = document.getElementById("concepts"); const connections = document.getElementById("connections"); const player = document.getElementById("player"); // Define the game logic function updateGame() { // Get the current concept and expression const currentConcept = concepts.children[0]; const currentExpression = concepts.children[1]; // Check if the player has clicked on the correct concept or expression if (player.cx === currentConcept.cx && player.cy === currentConcept.cy) { // Progress to the next level concepts.children[0] = concepts.children[1]; concepts.children[1] = concepts.children[2]; } else if (player.cx === currentExpression.x && player.cy === currentExpression.y) { // Progress to the next level concepts.children[0] = concepts.children[1]; concepts.children[1] = concepts.children[2]; } } // Add event listeners to the SVG elements concepts.addEventListener("click", updateGame); connections.addEventListener("click", updateGame); player.addEventListener("click", updateGame)
+</script>
