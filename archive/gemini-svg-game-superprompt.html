@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Star</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        #game-container { position: relative; }
+        #score { position: absolute; top: 10px; left: 10px; font-family: Arial, sans-serif; font-size: 20px; }
+    </style>
+</head>
+<body>
+  <svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <rect width="500" height="500" fill="white" />
+
+  <!-- Player -->
+  <circle id="player" cx="250" cy="250" r="20" fill="blue" />
+
+  <!-- Target -->
+  <circle id="target" cx="450" cy="100" r="20" fill="red" />
+
+  <!-- Obstacles -->
+  <circle cx="100" cy="100" r="20" fill="black" />
+  <circle cx="300" cy="300" r="20" fill="black" />
+  <circle cx="400" cy="200" r="20" fill="black" />
+
+  <!-- Script -->
+  <script>
+    // Get the player and target elements
+    const player = document.getElementById("player");
+    const target = document.getElementById("target");
+
+    // Add event listener for player movement
+    document.addEventListener("keydown", (e) => {
+      // Get the current player position
+      const playerX = parseFloat(player.getAttribute("cx"));
+      const playerY = parseFloat(player.getAttribute("cy"));
+
+      // Move the player based on the key pressed
+      switch (e.key) {
+        case "ArrowUp":
+          player.setAttribute("cy", playerY - 10);
+          break;
+        case "ArrowDown":
+          player.setAttribute("cy", playerY + 10);
+          break;
+        case "ArrowLeft":
+          player.setAttribute("cx", playerX - 10);
+          break;
+        case "ArrowRight":
+          player.setAttribute("cx", playerX + 10);
+          break;
+      }
+
+      // Check if the player has reached the target
+      const playerX2 = parseFloat(player.getAttribute("cx"));
+      const playerY2 = parseFloat(player.getAttribute("cy"));
+      const targetX = parseFloat(target.getAttribute("cx"));
+      const targetY = parseFloat(target.getAttribute("cy"));
+      if (Math.sqrt((playerX2 - targetX) ** 2 + (playerY2 - targetY) ** 2) < 20) {
+        alert("You win!");
+      }
+    });
+  </script>
+</svg>
+</body>
+<html>
